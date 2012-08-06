@@ -1,0 +1,30 @@
+hcuv_job:
+    pattern:  /
+    defaults: { _controller: "HcuvJobeetBundle:Job:index" }
+
+hcuv_job_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "HcuvJobeetBundle:Job:show" }
+
+hcuv_job_new:
+    pattern:  /new
+    defaults: { _controller: "HcuvJobeetBundle:Job:new" }
+
+hcuv_job_create:
+    pattern:  /create
+    defaults: { _controller: "HcuvJobeetBundle:Job:create" }
+    requirements: { _method: post }
+
+hcuv_job_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "HcuvJobeetBundle:Job:edit" }
+
+hcuv_job_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "HcuvJobeetBundle:Job:update" }
+    requirements: { _method: post }
+
+hcuv_job_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "HcuvJobeetBundle:Job:delete" }
+    requirements: { _method: post }

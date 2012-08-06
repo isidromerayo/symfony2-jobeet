@@ -136,4 +136,13 @@ class Category
     {
         return $this->category_affiliates;
     }
+    /**
+     * to string Object
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

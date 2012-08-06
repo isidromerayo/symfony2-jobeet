@@ -1,0 +1,65 @@
+<h1>Job list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Type</th>
+            <th>Company</th>
+            <th>Logo</th>
+            <th>Url</th>
+            <th>Position</th>
+            <th>Location</th>
+            <th>Description</th>
+            <th>How_to_apply</th>
+            <th>Token</th>
+            <th>Is_public</th>
+            <th>Is_activated</th>
+            <th>Email</th>
+            <th>Expires_at</th>
+            <th>Created_at</th>
+            <th>Updated_at</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('hcuv_job_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.type }}</td>
+            <td>{{ entity.company }}</td>
+            <td>{{ entity.logo }}</td>
+            <td>{{ entity.url }}</td>
+            <td>{{ entity.position }}</td>
+            <td>{{ entity.location }}</td>
+            <td>{{ entity.description }}</td>
+            <td>{{ entity.howtoapply }}</td>
+            <td>{{ entity.token }}</td>
+            <td>{{ entity.ispublic }}</td>
+            <td>{{ entity.isactivated }}</td>
+            <td>{{ entity.email }}</td>
+            <td>{% if entity.expiresat %}{{ entity.expiresat|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.createdat %}{{ entity.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('hcuv_job_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('hcuv_job_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('hcuv_job_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

@@ -1,0 +1,16 @@
+<h1>Job creation</h1>
+
+<form action="{{ path('hcuv_job_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('hcuv_job') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
