@@ -29,7 +29,7 @@ class JobControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/job/');
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
-        $this->assertTrue($crawler->filter('table.position')->count() > 0);
+        $this->assertTrue($crawler->filter('td.position')->count() > 0);
 
     }
 }
