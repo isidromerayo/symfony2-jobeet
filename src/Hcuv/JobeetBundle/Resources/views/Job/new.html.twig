@@ -1,3 +1,6 @@
+{% extends 'HcuvJobeetBundle::layout.html.twig' %}
+
+{% block content %}
 <h1>Job creation</h1>
 
 <form action="{{ path('hcuv_job_create') }}" method="post" {{ form_enctype(form) }}>
@@ -14,3 +17,4 @@
         </a>
     </li>
 </ul>
+{% endblock %}

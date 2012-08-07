@@ -1,3 +1,6 @@
+{% extends 'HcuvJobeetBundle::layout.html.twig' %}
+
+{% block content %}
 <h1>Job edit</h1>
 
 <form action="{{ path('hcuv_job_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
@@ -20,3 +23,4 @@
         </form>
     </li>
 </ul>
+{% endblock %}
