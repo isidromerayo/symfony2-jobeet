@@ -19,5 +19,17 @@ class JobControllerTest extends WebTestCase
 
         $this->assertTrue($crawler->filter('table.jobs')->count() > 0);
     }
+    /**
+     * @test
+     */
+    public function showJobFromHomePage()
+    {
+        // Create a new client to browse the application
+        $client = static::createClient();
 
+        $crawler = $client->request('GET', '/job/');
+        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
+        $this->assertTrue($crawler->filter('table.position')->count() > 0);
+
+    }
 }
