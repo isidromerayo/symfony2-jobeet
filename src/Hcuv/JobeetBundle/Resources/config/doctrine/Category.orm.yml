@@ -1,5 +1,6 @@
 Hcuv\JobeetBundle\Entity\Category:
   type: entity
+  repositoryClass: Hcuv\JobeetBundle\Repository\CategoryRepository
   table: category
   id:
     id:
