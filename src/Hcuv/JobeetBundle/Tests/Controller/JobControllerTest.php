@@ -35,6 +35,18 @@ class JobControllerTest extends WebTestCase
         $crawler = $client->click($link);
 
         $this->assertTrue(200 === $client->getResponse()->getStatusCode(), 'Don\'t load detail job');
-        $this->assertTrue($crawler->filter('h1:contains("Job")')->count() == 1);
+        $this->assertTrue($crawler->filter('h3:contains("Web Designer")')->count() == 1);
+    }
+    /**
+     * @test
+     */
+    public function showJobNotExistServerResponse404()
+    {
+        // Create a new client to browse the application
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/job/0/show');
+        $this->assertTrue(404 === $client->getResponse()->getStatusCode());
+        $this->assertTrue($crawler->filter('html:contains("Unable to find Job entity.")')->count() == 1);
     }
 }

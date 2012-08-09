@@ -1,98 +1,48 @@
 {% extends 'HcuvJobeetBundle::layout.html.twig' %}
 
+{% block title %}
+{{ entity.company }} is looking for a {{ entity.position }}
+{% endblock %}
+
 {% block stylesheets %}
 {{ parent() }}
-<link rel="stylesheet" href="{{ asset('bundles/hcuvjobeet/css/jobs.css') }}" type="text/css" media="all" />
+<link rel="stylesheet" href="{{ asset('bundles/hcuvjobeet/css/job.css') }}" type="text/css" media="all" />
 {% endblock %}
 
 {% block content %}
-<h1>Job</h1>
+<div id="job">
+    <h1>{{ entity.company }}</h1>
+    <h2>{{ entity.location }}</h2>
+    <h3>
+        {{ entity.position }}
+        <small> - {{ entity.type }}</small>
+    </h3>
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Type</th>
-            <td>{{ entity.type }}</td>
-        </tr>
-        <tr>
-            <th>Company</th>
-            <td>{{ entity.company }}</td>
-        </tr>
-        <tr>
-            <th>Logo</th>
-            <td>{{ entity.logo }}</td>
-        </tr>
-        <tr>
-            <th>Url</th>
-            <td>{{ entity.url }}</td>
-        </tr>
-        <tr>
-            <th>Position</th>
-            <td>{{ entity.position }}</td>
-        </tr>
-        <tr>
-            <th>Location</th>
-            <td>{{ entity.location }}</td>
-        </tr>
-        <tr>
-            <th>Description</th>
-            <td>{{ entity.description }}</td>
-        </tr>
-        <tr>
-            <th>How_to_apply</th>
-            <td>{{ entity.howtoapply }}</td>
-        </tr>
-        <tr>
-            <th>Token</th>
-            <td>{{ entity.token }}</td>
-        </tr>
-        <tr>
-            <th>Is_public</th>
-            <td>{{ entity.ispublic }}</td>
-        </tr>
-        <tr>
-            <th>Is_activated</th>
-            <td>{{ entity.isactivated }}</td>
-        </tr>
-        <tr>
-            <th>Email</th>
-            <td>{{ entity.email }}</td>
-        </tr>
-        <tr>
-            <th>Expires_at</th>
-            <td>{{ entity.expiresat|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Created_at</th>
-            <td>{{ entity.createdat|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Updated_at</th>
-            <td>{{ entity.updatedat|date('Y-m-d H:i:s') }}</td>
-        </tr>
-    </tbody>
-</table>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('hcuv_job') }}">
-            Back to the list
+    {% if entity.logo %}
+    <div class="logo">
+        <a href="{{ entity.url }}">
+            <img src="/uploads/jobs/{{ entity.logo }}"
+                 alt="{{ entity.company }} logo" />
         </a>
-    </li>
-    <li>
+    </div>
+    {% endif %}
+
+    <div class="description">
+        {{ entity.description|nl2br }}
+    </div>
+
+    <h4>How to apply?</h4>
+
+    <p class="how_to_apply">{{ entity.howtoapply }}</p>
+
+    <div class="meta">
+        <small>posted on {{ entity.createdat|date('m/d/Y') }}</small>
+    </div>
+
+    <div style="padding: 20px 0">
         <a href="{{ path('hcuv_job_edit', { 'id': entity.id }) }}">
             Edit
         </a>
-    </li>
-    <li>
-        <form action="{{ path('hcuv_job_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+    </div>
+</div>
 {% endblock %}
