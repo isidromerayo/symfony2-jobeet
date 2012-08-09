@@ -3,8 +3,10 @@ hcuv_job:
     defaults: { _controller: "HcuvJobeetBundle:Job:index" }
 
 hcuv_job_show:
-    pattern:  /{id}/show
+    pattern:  /{company}/{location}/{id}/{position}
     defaults: { _controller: "HcuvJobeetBundle:Job:show" }
+    requirements:
+      id: \d+
 
 hcuv_job_new:
     pattern:  /new

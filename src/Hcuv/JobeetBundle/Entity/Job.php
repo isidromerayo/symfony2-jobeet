@@ -3,6 +3,7 @@
 namespace Hcuv\JobeetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Hcuv\JobeetBundle\Utils\Jobeet as Jobeet;
 
 /**
  * Hcuv\JobeetBundle\Entity\Job
@@ -489,5 +490,32 @@ class Job
     public function setUpdatedAtValue()
     {
         $this->updated_at = new \DateTime();
+    }
+    /**
+     * Slug company
+     *
+     * @return mixed|string
+     */
+    public function getCompanySlug()
+    {
+        return Jobeet::slugify($this->getCompany());
+    }
+    /**
+     * Slug position
+     *
+     * @return mixed|string
+     */
+    public function getPositionSlug()
+    {
+        return Jobeet::slugify($this->getPosition());
+    }
+    /**
+     * Slug location
+     *
+     * @return mixed|string
+     */
+    public function getLocationSlug()
+    {
+        return Jobeet::slugify($this->getLocation());
     }
 }
