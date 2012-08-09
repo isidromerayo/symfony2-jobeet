@@ -65,7 +65,7 @@ class JobControllerTest extends WebTestCase
      */
     public function showJobExpiredForwared404Page()
     {
-        $crawler = $this->client->request('GET', '/job/sensio-labs/paris-france/12/web-developer-expired');
+        $crawler = $this->client->request('GET', '/job/sensio-labs/paris-france/3/web-developer-expired');
         $this->assertTrue(404 === $this->client->getResponse()->getStatusCode());
         $this->assertTrue($crawler->filter('html:contains("Unable to find Job entity.")')->count() == 1);
 

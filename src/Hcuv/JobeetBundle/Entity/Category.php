@@ -35,6 +35,11 @@ class Category
     private $more_jobs;
 
     /**
+     * @var string $slug
+     */
+    private $slug;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -193,5 +198,22 @@ class Category
     public function getMoreJobs()
     {
         return $this->more_jobs;
+    }
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Category
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function setSlugValue()
+    {
+        $this->slug = Jobeet::slugify($this->getName());
     }
 }

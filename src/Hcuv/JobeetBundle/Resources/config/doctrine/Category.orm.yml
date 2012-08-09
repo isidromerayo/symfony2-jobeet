@@ -11,6 +11,10 @@ Hcuv\JobeetBundle\Entity\Category:
       type: string
       length: 255
       unique: true
+    slug:
+      type: string
+      length: 255
+      unique: true
   oneToMany:
     jobs:
       targetEntity: Job
@@ -18,3 +22,6 @@ Hcuv\JobeetBundle\Entity\Category:
     category_affiliates:
       targetEntity: CategoryAffiliate
       mappedBy: category
+  lifecycleCallbacks:
+    prePersist: [ setSlugValue ]
+    preUpdate: [ setSlugValue ]
