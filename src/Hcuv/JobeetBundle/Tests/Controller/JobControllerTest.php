@@ -12,6 +12,18 @@ class JobControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
     }
+
+    /**
+     * @test
+     */
+    public function rootUrlHomeJobs()
+    {
+        $crawler = $this->client->request('GET', '/');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+
+        $this->assertTrue($crawler->filter('table.jobs')->count() > 0);
+    }
+
     /**
      * @test
      */
@@ -22,7 +34,6 @@ class JobControllerTest extends WebTestCase
 
         $this->assertTrue($crawler->filter('table.jobs')->count() > 0);
     }
-
 
     /**
      * @test
