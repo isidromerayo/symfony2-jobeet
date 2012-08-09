@@ -44,7 +44,7 @@ class JobController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('HcuvJobeetBundle:Job')->find($id);
+        $entity = $em->getRepository('HcuvJobeetBundle:Job')->getActiveJob($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Job entity.');

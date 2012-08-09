@@ -55,7 +55,7 @@ class JobControllerTest extends WebTestCase
      */
     public function showJobNotExistServerResponse404()
     {
-        $this->client->request('GET', '/job/sensio-labs/paris-france/0/web-developer0/');
+        $crawler = $this->client->request('GET', '/job/sensio-labs/paris-france/0/web-developer0/');
         $this->assertTrue(404 === $this->client->getResponse()->getStatusCode());
         // $this->assertTrue($crawler->filter('html:contains("Unable to find Job entity.")')->count() == 1);
     }
@@ -63,11 +63,11 @@ class JobControllerTest extends WebTestCase
     /**
      * @test
      */
-    public function showJobExpired()
+    public function showJobExpiredForwared404Page()
     {
         $crawler = $this->client->request('GET', '/job/sensio-labs/paris-france/12/web-developer-expired');
-        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
-        $this->assertTrue($crawler->filter('h3:contains("Web Developer Expired")')->count() == 1);
+        $this->assertTrue(404 === $this->client->getResponse()->getStatusCode());
+        $this->assertTrue($crawler->filter('html:contains("Unable to find Job entity.")')->count() == 1);
 
     }
 }
