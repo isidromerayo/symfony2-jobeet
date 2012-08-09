@@ -32,6 +32,8 @@ class Category
 
     private $active_jobs;
 
+    private $more_jobs;
+
     /**
      * Constructor
      */
@@ -173,5 +175,23 @@ class Category
     public function getSlug()
     {
         return Jobeet::slugify($this->getName());
+    }
+    /**
+     * set more jobs
+     *
+     * @param $jobs
+     */
+    public function setMoreJobs($jobs)
+    {
+        $this->more_jobs = $jobs >=  0 ? $jobs : 0;
+    }
+    /**
+     * get more jobs
+     *
+     * @return mixed
+     */
+    public function getMoreJobs()
+    {
+        return $this->more_jobs;
     }
 }

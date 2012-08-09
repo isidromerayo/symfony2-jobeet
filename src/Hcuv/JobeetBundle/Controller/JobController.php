@@ -29,6 +29,8 @@ class JobController extends Controller
             $category->setActiveJobs($em->getRepository('HcuvJobeetBundle:Job')
                 ->getActiveJobs($category->getId(),
                     $this->container->getParameter('max_jobs_on_homepage')));
+            $category->setMoreJobs($em->getRepository('HcuvJobeetBundle:Job')
+                ->countActiveJobs($category->getId()) - $this->container->getParameter('max_jobs_on_homepage'));
         }
 
         return $this->render('HcuvJobeetBundle:Job:index.html.twig', array(

@@ -16,6 +16,7 @@ class JobRepository extends EntityRepository
      * Active jobs
      *
      * @param null $category_id
+     *
      * @return array
      */
     public function getActiveJobs($category_id = null, $max = null)
@@ -39,6 +40,13 @@ class JobRepository extends EntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Get active Job
+     *
+     * @param $id
+     *
+     * @return mixed|null
+     */
     public function getActiveJob($id)
     {
         $query = $this->createQueryBuilder('j')
@@ -55,5 +63,29 @@ class JobRepository extends EntityRepository
         }
 
         return $job;
+    }
+    /**
+     * Count active jobs by category
+     *
+     * @param integer $category_id
+     *
+     * @return integer
+     */
+    public function countActiveJobs($category_id = null)
+    {
+        $qb = $this->createQueryBuilder('j')
+            ->select('count(j.id)')
+            ->where('j.expires_at > :date')
+            ->setParameter('date', date('Y-m-d H:i:s', time()));
+
+        if($category_id)
+        {
+            $qb->andWhere('j.category = :category_id')
+                ->setParameter('category_id', $category_id);
+        }
+
+        $query = $qb->getQuery();
+
+        return $query->getSingleScalarResult();
     }
 }
