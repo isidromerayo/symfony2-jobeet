@@ -1,5 +1,6 @@
 Hcuv\JobeetBundle\Entity\Job:
   type: entity
+  repositoryClass: Hcuv\JobeetBundle\Repository\JobRepository
   table: job
   id:
     id:
