@@ -3,6 +3,7 @@
 namespace Hcuv\JobeetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Hcuv\JobeetBundle\Utils\Jobeet;
 
 /**
  * Hcuv\JobeetBundle\Entity\Category
@@ -163,5 +164,14 @@ class Category
     public function getActiveJobs()
     {
         return $this->active_jobs;
+    }
+    /**
+     * Slug name
+     *
+     * @return mixed|string
+     */
+    public function getSlug()
+    {
+        return Jobeet::slugify($this->getName());
     }
 }
