@@ -390,7 +390,11 @@ class Job
      */
     public function setExpiresAt($expiresAt)
     {
-        $this->expires_at = $expiresAt;
+        if (!$this->getExpiresAt())
+        {
+            $now = $this->getCreatedAt() ? $this->getCreatedAt()->format('U') : time();
+            $this->expires_at = new \DateTime(date('Y-m-d H:i:s', $now + 86400 * 30));
+        }
     
         return $this;
     }
@@ -517,5 +521,13 @@ class Job
     public function getLocationSlug()
     {
         return Jobeet::slugify($this->getLocation());
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setExpiresAtValue()
+    {
+        // Add your code here
     }
 }
