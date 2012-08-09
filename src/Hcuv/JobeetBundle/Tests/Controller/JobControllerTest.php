@@ -6,35 +6,37 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class JobControllerTest extends WebTestCase
 {
+    protected $client;
+
+    public function setUp()
+    {
+        $this->client = static::createClient();
+    }
     /**
      * @test
      */
     public function homeJobHasJobs()
     {
-        // Create a new client to browse the application
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/job/');
-        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
+        $crawler = $this->client->request('GET', '/job/');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
         $this->assertTrue($crawler->filter('table.jobs')->count() > 0);
     }
+
+
     /**
      * @test
      */
     public function showJobFromHomePage()
     {
-        // Create a new client to browse the application
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/job/');
-        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
+        $crawler = $this->client->request('GET', '/job/');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
         $this->assertTrue($crawler->filter('td.position')->count() > 0);
         // TODO better dom expression
         $link = $crawler->selectLink('Web Designer')->link();
-        $crawler = $client->click($link);
+        $crawler = $this->client->click($link);
 
-        $this->assertTrue(200 === $client->getResponse()->getStatusCode(), 'Don\'t load detail job');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode(), 'Don\'t load detail job');
         $this->assertTrue($crawler->filter('h3:contains("Web Designer")')->count() == 1);
     }
     /**
@@ -42,11 +44,8 @@ class JobControllerTest extends WebTestCase
      */
     public function showJobNotExistServerResponse404()
     {
-        // Create a new client to browse the application
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/job/0/show');
-        $this->assertTrue(404 === $client->getResponse()->getStatusCode());
+        $crawler = $this->client->request('GET', '/job/0/show');
+        $this->assertTrue(404 === $this->client->getResponse()->getStatusCode());
         $this->assertTrue($crawler->filter('html:contains("Unable to find Job entity.")')->count() == 1);
     }
 }
