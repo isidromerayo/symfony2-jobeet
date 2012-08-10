@@ -15,19 +15,9 @@
             </div>
             <h1><a href="{{ path('HcuvJobeetBundle_category', { 'slug': category.slug }) }}">{{ category.name }}</a></h1>
         </div>
-        <table class="jobs">
-            {% for entity in category.activejobs %}
-            <tr class="{{ cycle(['even', 'odd'], loop.index) }}">
-                <td class="location">{{ entity.location }}</td>
-                <td class="position">
-                    <a href="{{ path('hcuv_job_show', { 'id': entity.id, 'company': entity.companyslug, 'location': entity.locationslug, 'position': entity.positionslug }) }}">
-                        {{ entity.position }}
-                    </a>
-                </td>
-                <td class="company">{{ entity.company }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+
+        {% include 'HcuvJobeetBundle:Job:list.html.twig' with {'jobs': category.activejobs} %}
+
         {% if category.morejobs %}
         <div class="more_jobs">
             and <a href="{{ path('HcuvJobeetBundle_category', { 'slug': category.slug }) }}">{{ category.morejobs }}</a>

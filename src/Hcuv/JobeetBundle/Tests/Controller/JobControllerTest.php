@@ -67,7 +67,7 @@ class JobControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/job/sensio-labs/paris-france/3/web-developer-expired');
         // Assert the response status code.
-        $this->assertTrue($this->client->getResponse()->isNotFound(),$crawler->filter('div.text_exception h1')->text());
+        $this->assertTrue($this->client->getResponse()->isNotFound(), $crawler->filter('div.text_exception h1')->text());
         $this->assertTrue($crawler->filter('html:contains("Unable to find Job entity.")')->count() == 1);
     }
 }
