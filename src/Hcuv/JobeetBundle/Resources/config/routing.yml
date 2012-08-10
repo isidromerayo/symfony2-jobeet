@@ -1,6 +1,6 @@
 HcuvJobeetBundle_category:
-    pattern: /category/{slug}
-    defaults: { _controller: HcuvJobeetBundle:Category:show }
+    pattern: /category/{slug}/{page}
+    defaults: { _controller: HcuvJobeetBundle:Category:show, page: 1 }
 HcuvJobeetBundle_hcuv_job:
         resource: "@HcuvJobeetBundle/Resources/config/routing/job.yml"
         prefix:   /job

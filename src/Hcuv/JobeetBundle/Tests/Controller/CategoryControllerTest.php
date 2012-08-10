@@ -22,11 +22,12 @@ class CategoryControllerTest extends WebTestCase
     /**
      * @test
      */
-    public function showCategoryProgramming()
+    public function showCategoryProgrammingHavePagination()
     {
         $crawler = $this->client->request('GET','/category/programming');
         // $mensaje = $crawler->filter('div.text_exception h1')->text();
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->filter('html:contains("Programming")')->count());
+        $this->assertEquals(1, $crawler->filter('div.pagination_desc:contains("page")')->count());
     }
 }
