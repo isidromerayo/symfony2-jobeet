@@ -70,8 +70,42 @@ class CategoryControllerTest extends WebTestCase
         // an expired job page forwards the user to a 404
         $crawler = $this->client->request('GET', sprintf('/job/sensio-labs/paris-france/%d/web-developer', $this->getExpiredJob()->getId()));
         $this->assertTrue(404 === $this->client->getResponse()->getStatusCode());
-  }
+    }
 
+    public function testShow()
+    {
+        // get the custom parameters from app config.yml
+        $kernel = static::createKernel();
+        $kernel->boot();
+        $max_jobs_on_homepage = $kernel->getContainer()->getParameter('max_jobs_on_homepage');
+        $max_jobs_on_category = $kernel->getContainer()->getParameter('max_jobs_on_category');
+
+        $this->client = static::createClient();
+
+        // categories on homepage are clickable
+        $crawler = $this->client->request('GET', '/');
+        $link = $crawler->selectLink('Programming')->link();
+        $crawler = $this->client->click($link);
+        $this->assertEquals('Hcuv\JobeetBundle\Controller\CategoryController::showAction', $this->client->getRequest()->attributes->get('_controller'));
+        $this->assertEquals('programming', $this->client->getRequest()->attributes->get('slug'));
+
+        // categories with more than $max_jobs_on_homepage jobs also have a "more" link
+        $crawler = $this->client->request('GET', '/');
+        $link = $crawler->selectLink('21')->link();
+        $crawler = $this->client->click($link);
+        $this->assertEquals('Hcuv\JobeetBundle\Controller\CategoryController::showAction', $this->client->getRequest()->attributes->get('_controller'));
+        $this->assertEquals('programming', $this->client->getRequest()->attributes->get('slug'));
+
+        // only $max_jobs_on_category jobs are listed
+        $this->assertTrue($crawler->filter('.jobs tr')->count() > 0, $crawler->filter('.jobs tr')->text());
+        $this->assertRegExp('/31 jobs/', $crawler->filter('.pagination_desc')->text());
+        $this->assertRegExp('/page 1\/2/', $crawler->filter('.pagination_desc')->text());
+
+        $link = $crawler->selectLink('2')->link();
+        $crawler = $this->client->click($link);
+        $this->assertEquals(2, $this->client->getRequest()->attributes->get('page'));
+        $this->assertRegExp('/page 2\/2/', $crawler->filter('.pagination_desc')->text());
+    }
     /**
      * @test
      */
