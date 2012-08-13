@@ -45,4 +45,11 @@ class JobeetTest extends \PHPUnit_Framework_Testcase
         $this->assertEquals('n-a', Jobeet::slugify(''));
         $this->assertEquals('n-a', Jobeet::slugify(' - '));
     }
+    /**
+     * @test
+     */
+    public function examplesWithAccent()
+    {
+        $this->assertEquals('developpeur-web', Jobeet::slugify('Développeur Web'));
+    }
 }
