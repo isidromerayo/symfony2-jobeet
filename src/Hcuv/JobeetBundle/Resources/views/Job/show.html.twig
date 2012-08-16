@@ -10,6 +10,10 @@
 {% endblock %}
 
 {% block content %}
+    {% if app.request.get('token') %}
+        {% include 'HcuvJobeetBundle:Job:admin.html.twig' with {'job': entity} %}
+    {% endif %}
+
 <div id="job">
     <h1>{{ entity.company }}</h1>
     <h2>{{ entity.location }}</h2>
@@ -40,7 +44,7 @@
     </div>
 
     <div style="padding: 20px 0">
-        <a href="{{ path('hcuv_job_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('hcuv_job_edit', { 'token': entity.token }) }}">
             Edit
         </a>
     </div>
