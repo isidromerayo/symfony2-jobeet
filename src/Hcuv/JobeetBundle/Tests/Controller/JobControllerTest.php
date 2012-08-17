@@ -115,4 +115,94 @@ class JobControllerTest extends WebTestCase
         $query->setParameter('location', 'Atlanta, USA');
         $this->assertTrue(0 < $query->getSingleScalarResult());
     }
+    /**
+     * @todo
+     * @group testing_forms
+     * string(40101) "    An exception occurred while executing
+     * 'INSERT INTO job (type, company, logo, url, position, location, description, how_to_apply, token, is_public, is_activated, email, expires_at, created_at, updated_at, category_id)
+     * VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+     * with params {"1":"full-time","2":"Sensio Labs","3":null,"4":null,"5":"Developer","6":"Atlanta, USA","7":null,"8":null,"9":"db38ee74c7145b48a6c69de29a933a02e5cff6c9","10":0,"11":null,"12":"not.an.email","13":"2012-09-16 14:31:21","14":"
+     */
+    public function jobFormErrors()
+    {
+        $crawler = $this->client->request('GET', '/job/new');
+        $form = $crawler->selectButton('Preview your job')->form(array(
+            'job[company]'      => 'Sensio Labs',
+            'job[position]'     => 'Developer',
+            'job[location]'     => 'Atlanta, USA',
+            'job[email]'        => 'not.an.email',
+        ));
+        $crawler = $this->client->submit($form);
+
+        // var_dump($crawler->filter('html')->text());
+
+        // check if we have 3 errors
+        $this->assertTrue($crawler->filter('.error_list')->count() == 3);
+        // check if we have error on job_description field
+        $this->assertTrue($crawler->filter('#job_description')->siblings()->first()->filter('.error_list')->count() == 1);
+        // check if we have error on job_how_to_apply field
+        $this->assertTrue($crawler->filter('#job_how_to_apply')->siblings()->first()->filter('.error_list')->count() == 1);
+        // check if we have error on job_email field
+        $this->assertTrue($crawler->filter('#job_email')->siblings()->first()->filter('.error_list')->count() == 1);
+
+    }
+
+    /**
+     * @test
+     * @group testing_forms
+     */
+    public function publishJob()
+    {
+        $client = $this->createJob(array('job[position]' => 'FOO1'));
+        $crawler = $client->getCrawler();
+        $form = $crawler->selectButton('Publish')->form();
+        $client->submit($form);
+
+        $kernel = static::createKernel();
+        $kernel->boot();
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        $query = $em->createQuery('SELECT count(j.id) from HcuvJobeetBundle:Job j WHERE j.position = :position AND j.is_activated = 1');
+        $query->setParameter('position', 'FOO1');
+        $this->assertTrue(0 < $query->getSingleScalarResult());
+    }
+    /**
+     * @test
+     * @group testing_forms
+     */
+    public function deleteJob()
+    {
+        $client = $this->createJob(array('job[position]' => 'FOO2'));
+        $crawler = $client->getCrawler();
+        $form = $crawler->selectButton('Delete')->form();
+        $client->submit($form);
+
+        $kernel = static::createKernel();
+        $kernel->boot();
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        $query = $em->createQuery('SELECT count(j.id) from HcuvJobeetBundle:Job j WHERE j.position = :position');
+        $query->setParameter('position', 'FOO2');
+        $this->assertTrue(0 == $query->getSingleScalarResult());
+    }
+
+    public function createJob($values = array())
+    {
+        $crawler = $this->client->request('GET', '/job/new');
+        $form = $crawler->selectButton('Preview your job')->form(array_merge(array(
+            'job[company]'      => 'Sensio Labs',
+            'job[url]'          => 'http://www.sensio.com/',
+            'job[position]'     => 'Developer',
+            'job[location]'     => 'Atlanta, USA',
+            'job[description]'  => 'You will work with symfony to develop websites for our customers.',
+            'job[how_to_apply]' => 'Send me an email',
+            'job[email]'        => 'for.a.job@example.com',
+            'job[is_public]'    => false,
+        ), $values));
+
+        $this->client->submit($form);
+        $this->client->followRedirect();
+
+        return $this->client;
+    }
 }
