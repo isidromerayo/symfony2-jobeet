@@ -96,6 +96,8 @@ class JobControllerTest extends WebTestCase
         $this->client->submit($form);
         $this->assertEquals('Hcuv\JobeetBundle\Controller\JobController::createAction',
                 $this->client->getRequest()->attributes->get('_controller'));
-
+        $this->client->followRedirect();
+        $this->assertEquals('Hcuv\JobeetBundle\Controller\JobController::previewAction',
+                $this->client->getRequest()->attributes->get('_controller'));
     }
 }
