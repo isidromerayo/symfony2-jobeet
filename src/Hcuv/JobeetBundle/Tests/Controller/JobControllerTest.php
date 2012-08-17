@@ -186,7 +186,27 @@ class JobControllerTest extends WebTestCase
         $this->assertTrue(0 == $query->getSingleScalarResult());
     }
 
-    public function createJob($values = array())
+    /**
+     * @test
+     * @group testing_forms
+     */
+    public function editJob()
+    {
+        $client = $this->createJob(array('job[position]' => 'FOO3'), true);
+        $crawler = $client->getCrawler();
+        $crawler = $client->request('GET', sprintf('/job/%s/edit', $this->getJobByPosition('FOO3')->getToken()));
+        $this->assertTrue(404 === $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Aux create job
+     *
+     * @param array $values
+     * @param bool $publish
+     *
+     * @return mixed
+     */
+    public function createJob($values = array(), $publish = false)
     {
         $crawler = $this->client->request('GET', '/job/new');
         $form = $crawler->selectButton('Preview your job')->form(array_merge(array(
@@ -203,6 +223,30 @@ class JobControllerTest extends WebTestCase
         $this->client->submit($form);
         $this->client->followRedirect();
 
+        if($publish) {
+            $crawler = $this->client->getCrawler();
+            $form = $crawler->selectButton('Publish')->form();
+            $this->client->submit($form);
+            $this->client->followRedirect();
+        }
+
         return $this->client;
+    }
+    /**
+     * Aux get Job by position
+     *
+     * @param $position
+     * @return mixed
+     */
+    public function getJobByPosition($position)
+    {
+        $kernel = static::createKernel();
+        $kernel->boot();
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        $query = $em->createQuery('SELECT j from HcuvJobeetBundle:Job j WHERE j.position = :position');
+        $query->setParameter('position', $position);
+        $query->setMaxResults(1);
+        return $query->getSingleResult();
     }
 }
