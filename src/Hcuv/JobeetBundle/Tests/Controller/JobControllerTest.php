@@ -70,4 +70,32 @@ class JobControllerTest extends WebTestCase
         $this->assertTrue($this->client->getResponse()->isNotFound(), $crawler->filter('div.text_exception h1')->text());
         $this->assertTrue($crawler->filter('html:contains("Unable to find Job entity.")')->count() == 1);
     }
+
+    /**
+     * @test
+     * @group testing_forms
+     */
+    public function jobForm()
+    {
+        $crawler = $this->client->request('GET', '/job/new');
+        $this->assertEquals('Hcuv\JobeetBundle\Controller\JobController::newAction',
+                $this->client->getRequest()->attributes->get('_controller'));
+
+        $form = $crawler->selectButton('Preview your job')->form(array(
+            'job[company]'      => 'Sensio Labs',
+            'job[url]'          => 'http://www.sensio.com/',
+            'job[file]'         => __DIR__.'/../../../../../web/bundles/hcuvjobeet/images/sensio-labs.gif',
+            'job[position]'     => 'Developer',
+            'job[location]'     => 'Atlanta, USA',
+            'job[description]'  => 'You will work with symfony to develop websites for our customers.',
+            'job[how_to_apply]' => 'Send me an email',
+            'job[email]'        => 'for.a.job@example.com',
+            'job[is_public]'    => false,
+        ));
+
+        $this->client->submit($form);
+        $this->assertEquals('Hcuv\JobeetBundle\Controller\JobController::createAction',
+                $this->client->getRequest()->attributes->get('_controller'));
+
+    }
 }

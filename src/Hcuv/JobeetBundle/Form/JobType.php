@@ -37,6 +37,6 @@ class JobType extends AbstractType
 
     public function getName()
     {
-        return 'hcuv_jobeetbundle_jobtype';
+        return 'job';
     }
 }
