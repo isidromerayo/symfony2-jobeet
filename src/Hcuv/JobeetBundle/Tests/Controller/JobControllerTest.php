@@ -199,6 +199,39 @@ class JobControllerTest extends WebTestCase
     }
 
     /**
+     * @test
+     * @group testing_forms
+     */
+    public function extendJob()
+    {
+        // A job validity cannot be extended before the job expires soon
+        $client = $this->createJob(array('job[position]' => 'FOO4'), true);
+        $crawler = $client->getCrawler();
+        $this->assertTrue($crawler->filter('input[type=submit]:contains("Extend")')->count() == 0);
+
+        // A job validity can be extended when the job expires soon
+
+        // Create a new FOO5 job
+        $client = $this->createJob(array('job[position]' => 'FOO5'), true);
+        // Get the job and change the expire date to today
+        $kernel = static::createKernel();
+        $kernel->boot();
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $job = $em->getRepository('HcuvJobeetBundle:Job')->findOneByPosition('FOO5');
+        $job->setExpiresAt(new \DateTime());
+        $em->flush();
+        // Go to the preview page and extend the job
+        $crawler = $client->request('GET', sprintf('/job/%s/%s/%s/%s', $job->getCompanySlug(), $job->getLocationSlug(), $job->getToken(), $job->getPositionSlug()));
+        $crawler = $client->getCrawler();
+        $form = $crawler->selectButton('Extend')->form();
+        $client->submit($form);
+        // Reload the job from db
+        $job = $this->getJobByPosition('FOO5');
+        // Check the expiration date
+        $this->assertEquals($job->getExpiresAt()->format('y/m/d'), date('y/m/d', time() + 86400 * 30));
+    }
+
+    /**
      * Aux create job
      *
      * @param array $values

@@ -40,3 +40,7 @@ hcuv_job_publish:
     pattern:  /{token}/publish
     defaults: { _controller: "HcuvJobeetBundle:Job:publish" }
     requirements: { _method: post }
+hcuv_job_extend:
+    pattern:  /{token}/extend
+    defaults: { _controller: "HcuvJobeetBundle:Job:extend" }
+    requirements: { _method: post }
