@@ -111,13 +111,13 @@ class JobController extends Controller
     public function editAction($token)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('HcuvJobeetBundle:Job')->findOneByToken($token);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Job entity.');
         }
-
+        if ($entity->getIsActivated()) {
+            throw $this->createNotFoundException('Job is activated and cannot be edited.');
+        }
         $editForm = $this->createForm(new JobType(), $entity);
         $deleteForm = $this->createDeleteForm($token);
 
