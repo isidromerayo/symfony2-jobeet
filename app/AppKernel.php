@@ -20,6 +20,12 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\CacheBundle\SonataCacheBundle(),
+            new Sonata\jQueryBundle\SonatajQueryBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Hcuv\JobeetBundle\HcuvJobeetBundle(),
         );
 
