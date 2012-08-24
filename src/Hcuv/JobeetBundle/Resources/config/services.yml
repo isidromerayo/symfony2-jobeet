@@ -2,6 +2,17 @@ parameters:
 #    hcuv_jobeet.example.class: Hcuv\JobeetBundle\Example
 
 services:
+    hcuv.jobeet.admin.category:
+        class: Hcuv\JobeetBundle\Admin\CategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: jobeet, label: Categories }
+        arguments: [null, Hcuv\JobeetBundle\Entity\Category, HcuvJobeetBundle:CategoryAdmin]
+ 
+    hcuv.jobeet.admin.job:
+        class: Hcuv\JobeetBundle\Admin\JobAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: jobeet, label: Jobs }
+        arguments: [null, Hcuv\JobeetBundle\Entity\Job, HcuvJobeetBundle:JobAdmin]
 #    hcuv_jobeet.example:
 #        class: %hcuv_jobeet.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
