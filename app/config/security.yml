@@ -11,10 +11,8 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
 
     providers:
-        in_memory:
-            memory:
-                users:
-                    admin: { password: adminpass, roles: 'ROLE_ADMIN' }
+        main:
+            entity: { class: Hcuv\JobeetBundle\Entity\User, property: username }
 
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        Hcuv\JobeetBundle\Entity\User: sha512
