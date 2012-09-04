@@ -62,7 +62,7 @@ nbproject
 *.pydevproject
 .project
 .metadata
-bin/**
+bin/doctrine*
 tmp/**
 tmp/**/*
 *.tmp
