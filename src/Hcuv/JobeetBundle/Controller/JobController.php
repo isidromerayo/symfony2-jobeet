@@ -45,13 +45,24 @@ class JobController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('HcuvJobeetBundle:Job')->getActiveJob($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Job entity.');
         }
+        $session = $this->getRequest()->getSession();
+        $jobs = $session->get('job_history', array());
+        $job = array('id' => $entity->getId(),
+                    'position' => $entity->getPosition(),
+                    'company' => $entity->getCompany(),
+                    'companyslug' => $entity->getCompanySlug(),
+                    'locationslug' => $entity->getLocationSlug(),
+                    'positionslug' => $entity->getPositionSlug()
+            );
+        if (!in_array($job, $jobs)) {
+            array_unshift($jobs, $job);
+            $session->set('job_history', array_slice($jobs, 0, 3));
 
+        }
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('HcuvJobeetBundle:Job:show.html.twig', array(

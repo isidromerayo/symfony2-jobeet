@@ -44,6 +44,17 @@
         </div>
     </div>
 
+    <div id="job_history">
+        Recent viewed jobs:
+        <ul>
+            {% for job in app.session.get('job_history') %}
+            <li>
+                <a href="{{ path('hcuv_job_show', { 'id': job.id, 'company': job.companyslug, 'location': job.locationslug, 'position': job.positionslug }) }}">{{ job.position }} - {{ job.company }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
     <div id="content">
         {% if app.session.hasFlash('notice') %}
         <div class="flash_notice">
