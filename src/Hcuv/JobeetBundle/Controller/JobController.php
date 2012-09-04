@@ -20,10 +20,8 @@ class JobController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
+        $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('HcuvJobeetBundle:Category')->getWithJobs();
-
         foreach($categories as $category)
         {
             $category->setActiveJobs($em->getRepository('HcuvJobeetBundle:Job')
@@ -32,9 +30,17 @@ class JobController extends Controller
             $category->setMoreJobs($em->getRepository('HcuvJobeetBundle:Job')
                 ->countActiveJobs($category->getId()) - $this->container->getParameter('max_jobs_on_homepage'));
         }
+        $format = $this->getRequest()->getRequestFormat();
 
-        return $this->render('HcuvJobeetBundle:Job:index.html.twig', array(
-            'categories' => $categories
+        return $this->render('HcuvJobeetBundle:Job:index.' . $format . '.twig',
+            array(
+                'categories' => $categories,
+                'lastUpdated' => $em->getRepository('HcuvJobeetBundle:Job')
+                                    ->getLastestPost()
+                                    ->getCreatedAt()->format(DATE_ATOM),
+                'feedId' => sha1($this->get('router')
+                                    ->generate('hcuv_job',
+                                            array('_format' => 'atom'), true)),
         ));
     }
 
