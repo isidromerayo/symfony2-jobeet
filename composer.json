@@ -1,5 +1,5 @@
 {
-    "name": "isidromerayo/symfony2-jobeet
+    "name": "isidromerayo/symfony2-jobeet",
     "description": "Jobeet Tutorial with Symfony2(.x)",
     "autoload": {
         "psr-0": { "": "src/" }
