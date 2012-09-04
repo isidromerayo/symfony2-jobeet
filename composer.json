@@ -1,6 +1,6 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "name": "isidromerayo/symfony2-jobeet
+    "description": "Jobeet Tutorial with Symfony2(.x)",
     "autoload": {
         "psr-0": { "": "src/" }
     },
