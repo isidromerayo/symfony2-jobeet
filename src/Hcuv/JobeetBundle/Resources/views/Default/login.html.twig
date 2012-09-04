@@ -1,13 +1,30 @@
+{% extends 'HcuvJobeetBundle::layout_login.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/hcuvjobeet/css/login.css') }}" type="text/css" media="all" />
+{% endblock %}
+
+{% block content %}
+
+
+    <h1>Log In</h1>
 {% if error %}
-    <div>{{ error.message }}</div>
+    <div class="flash_error">{{ error.message }}</div>
 {% endif %}
 
-<form action="{{ path('login_check') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
-
-    <button type="submit">login</button>
+<form class="box login" action="{{ path('login_check') }}" method="post">
+        <fieldset class="boxBody">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password" />
+        </fieldset>
+        <footer>
+        <button type="submit">login</button>
+        </footer>
 </form>
+
+</div>
+
+{% endblock content %}

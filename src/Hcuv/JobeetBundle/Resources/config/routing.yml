@@ -3,6 +3,8 @@ login:
     defaults:  { _controller: HcuvJobeetBundle:Default:login }
 login_check:
     pattern:   /login_check
+logout:
+    pattern:   /logout
 
 HcuvJobeetBundle_category:
     pattern: /category/{slug}/{page}
