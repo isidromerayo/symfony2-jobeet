@@ -62,6 +62,31 @@ Thanks to Dragos Holban (http://www.ens.ro/) to create a tutorial.
 
 http://www.ens.ro/2012/03/21/jobeet-tutorial-with-symfony2/
 
+You modify the connection parameters into parameters.yml
+
+    parameters:
+        database_driver:   pdo_mysql
+        database_host:     localhost
+        database_port:     ~
+        database_name:     jobeet
+        database_user:     demo
+        database_password: demo
+
+        mailer_transport:  smtp
+        mailer_host:       localhost
+        mailer_user:       ~
+        mailer_password:   ~
+
+        locale:            en
+        secret:            N8Wvoek6KPwEI6onI692/.srbk06aZrb3pzuu/6
+
+You can populate create database and populate using the shell script
+
+    $ bin/prepare_enviroment_test.sh 
+
+Note: I don't have execute permissions use 
+
+    $ sh bin/prepare_enviroment_test.sh 
 
 
 References
