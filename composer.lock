@@ -179,29 +179,29 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/DoctrineBundle.git",
-                "reference": "274c24f8ddc8924cc9cbe63b937e031a9068db5a"
+                "reference": "db818ceec46d05fed4f944b957f82a4ab5197e27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/DoctrineBundle/zipball/274c24f8ddc8924cc9cbe63b937e031a9068db5a",
-                "reference": "274c24f8ddc8924cc9cbe63b937e031a9068db5a",
+                "url": "https://github.com/doctrine/DoctrineBundle/zipball/db818ceec46d05fed4f944b957f82a4ab5197e27",
+                "reference": "db818ceec46d05fed4f944b957f82a4ab5197e27",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
                 "doctrine/dbal": ">=2.2,<2.4-dev",
-                "symfony/framework-bundle": "2.1.*",
-                "symfony/doctrine-bridge": "2.1.*"
+                "symfony/framework-bundle": ">=2.1,<2.3-dev",
+                "symfony/doctrine-bridge": ">=2.1,<2.3-dev"
             },
             "require-dev": {
                 "doctrine/orm": ">=2.2,<2.4-dev",
-                "symfony/validator": "2.1.*",
-                "symfony/yaml": "2.1.*"
+                "symfony/yaml": ">=2.1,<2.3-dev",
+                "symfony/validator": ">=2.1,<2.3-dev"
             },
             "suggest": {
                 "doctrine/orm": "The Doctrine ORM integration is optional in the bundle."
             },
-            "time": "1348752376",
+            "time": "1348828243",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -1540,12 +1540,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "f62fa8a79edc94240a7fd3ef3096ddd789eced4f"
+                "reference": "0d92a245517c2cfbc0e39a0e2c8d220e928eaa04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/zipball/f62fa8a79edc94240a7fd3ef3096ddd789eced4f",
-                "reference": "f62fa8a79edc94240a7fd3ef3096ddd789eced4f",
+                "url": "https://github.com/symfony/symfony/zipball/0d92a245517c2cfbc0e39a0e2c8d220e928eaa04",
+                "reference": "0d92a245517c2cfbc0e39a0e2c8d220e928eaa04",
                 "shasum": ""
             },
             "require": {
@@ -1594,7 +1594,7 @@
                 "propel/propel1": "dev-master",
                 "monolog/monolog": "dev-master"
             },
-            "time": "1348749927",
+            "time": "1348842916",
             "type": "library",
             "extra": {
                 "branch-alias": {

@@ -89,6 +89,10 @@ Note: I don't have execute permissions use
     $ sh bin/prepare_enviroment_test.sh 
 
 
+Install all-in-one 
+
+$ curl -s https://raw.github.com/gist/3800877/d5114b1f962789552a27863bfa332a8f194b7532/all-in-one-symfony2-jobeet.sh | sh
+
 References
 ----------
 
