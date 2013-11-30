@@ -60,7 +60,11 @@ If you get any warnings or recommendations, fix them before moving on.
 
 Thanks to Dragos Holban (http://www.ens.ro/) to create a tutorial.
 
+For Symfony before 2.3 :
 http://www.ens.ro/2012/03/21/jobeet-tutorial-with-symfony2/
+
+For Symfony 2.3 :
+http://www.intelligentbee.com/blog/tag/symfony2-jobeet/
 
 You modify the connection parameters into parameters.yml
 
